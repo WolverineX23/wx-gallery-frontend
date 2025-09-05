@@ -4,6 +4,7 @@ import { message } from 'ant-design-vue'
 // 创建 Axios 实例  https://axios-http.com/docs/instance
 const myAxios = axios.create({
   baseURL: 'http://localhost:8101',   // 后端路由
+  // baseURL: "",    // 若前端配置代理解决 CORS, 则 baseURL 应为前端地址或留空
   timeout: 60000,   // ms
   withCredentials: true   // true：支持发请求时携带 Cookie
 });
