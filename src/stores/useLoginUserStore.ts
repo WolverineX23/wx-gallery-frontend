@@ -6,7 +6,8 @@ import { defineStore } from 'pinia'
  */
 export const useLoginUserStore = defineStore('loginUser', () => {
   const loginUser = ref({
-    userName: "未登录"
+    userName: "未登录",
+    id: -1
   })
 
   /**
