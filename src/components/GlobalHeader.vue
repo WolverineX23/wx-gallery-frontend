@@ -16,7 +16,7 @@
       </a-col>
       <a-col flex="120px">
         <div class="user-login-status">
-          <div v-if="loginUserStore.loginUser.id != -1">
+          <div v-if="loginUserStore.loginUser.id">
             {{ loginUserStore.loginUser.userName ?? '无名' }}
           </div>
           <div v-else>
