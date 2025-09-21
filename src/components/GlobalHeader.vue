@@ -46,7 +46,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { h, ref } from 'vue'
+import { computed, h, ref } from 'vue'
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons-vue'
 import { MenuProps, message } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
@@ -55,7 +55,8 @@ import { userLogoutUsingGet } from '@/api/userController.ts'
 
 const loginUserStore = useLoginUserStore()
 
-const items = ref<MenuProps['items']>([
+// 未经过滤处理的原始菜单
+const originItems = [
   {
     key: '/',
     icon: () => h(HomeOutlined),
@@ -72,7 +73,23 @@ const items = ref<MenuProps['items']>([
     label: h('a', { href: 'https://github.com/WolverineX23', target: '_blank' }, 'GitHub'),
     title: 'GitHub',
   },
-])
+]
+
+// 根据权限过滤菜单项
+const filterMenus = (menus = [] as MenuProps['items']) => {
+  return menus?.filter((menu) => {
+    if (menu?.key?.startsWith('/admin')) {
+      const loginUser = loginUserStore.loginUser
+      if (!loginUser || loginUser.userRole !== 'admin') {
+        return false
+      }
+    }
+    return true
+  })
+}
+
+// 展示在菜单的路由数组
+const items = computed(() => filterMenus(originItems))
 
 const router = useRouter()
 // 当前要高亮的菜单项
